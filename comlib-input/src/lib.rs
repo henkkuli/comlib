@@ -1,5 +1,5 @@
 use std::io::{BufRead, Error, Stdin, StdinLock};
-use std::str::FromStr;
+use std::{ops::RangeBounds, str::FromStr};
 
 mod consumable;
 pub use consumable::{Consumable, InputPattern};
@@ -50,8 +50,17 @@ where
 
     /// Read line a with the given type.
     ///
+    /// # Panics
+    /// Panics if the line can't be converted to `U`.
+    #[track_caller]
+    pub fn parse_line<U: FromStr>(&mut self) -> U {
+        self.parse_line_opt().unwrap()
+    }
+
+    /// Read line a with the given type.
+    ///
     /// If the line can't be parsed in the given type, then None is returned and the line is kept in the input.
-    pub fn parse_line<U: FromStr>(&mut self) -> Option<U> {
+    pub fn parse_line_opt<U: FromStr>(&mut self) -> Option<U> {
         let res = U::from_str(self.peek_line().ok()?).ok()?;
         self.read_line().unwrap();
         Some(res)
@@ -59,47 +68,54 @@ where
 
     /// Read line matching given `pattern`.
     ///
+    /// See examples of [`input_pattern`] to see how how to use the pattern.
+    ///
+    /// # Panics
+    /// Panics if the line doesn't match the pattern.
+    #[track_caller]
+    pub fn match_line<P: InputPattern>(&mut self, pattern: P) -> P::Output {
+        self.match_line_opt(pattern).unwrap()
+    }
+
+    /// Read line matching given `pattern`.
+    ///
     /// If the line doesn't match the pattern, None is returned and the line is kept in the input.
     ///
     /// See examples of [`input_pattern`] to see how how to use the pattern.
-    pub fn match_line<P: InputPattern>(&mut self, pattern: P) -> Option<P::Output> {
+    pub fn match_line_opt<P: InputPattern>(&mut self, pattern: P) -> Option<P::Output> {
         let res = pattern.parse_all(self.peek_line().ok()?)?;
         self.read_line().unwrap();
         Some(res)
     }
 
-    /// Read `n` at most lines matching given `pattern`.
+    /// Read multiple lines matching given `pattern`.
     ///
-    /// See examples of [`input_pattern`] to see how how to use the pattern.
-    pub fn match_n_lines<P: InputPattern>(&mut self, n: usize, pattern: P) -> Vec<P::Output> {
-        self.match_n_lines_impl(usize::MAX, n, pattern)
-    }
-
-    /// Read all lines matching given `pattern`.
-    ///
-    /// See examples of [`input_pattern`] to see how how to use the pattern.
-    pub fn match_all_lines<P: InputPattern>(&mut self, pattern: P) -> Vec<P::Output> {
-        self.match_n_lines_impl(usize::MAX, 1, pattern)
-    }
-
-    /// Implementation for both [`match_n_lines`] and [`match_all_lines`]
-    ///
-    /// [`match_n_lines`]: Input::match_n_lines
-    /// [`match_all_lines`]: Input::match_all_lines
-    fn match_n_lines_impl<P: InputPattern>(
-        &mut self,
-        n: usize,
-        reserve: usize,
-        pattern: P,
-    ) -> Vec<P::Output> {
-        let mut res = Vec::with_capacity(reserve);
-        for _ in 0..n {
-            if let Some(item) = self.match_line(pattern.clone()) {
-                res.push(item)
+    /// # Panics
+    /// Panics if not enough of the lines match the pattern.
+    #[track_caller]
+    pub fn match_lines<P, R>(&mut self, pattern: P, range: R) -> Vec<P::Output>
+    where
+        P: InputPattern,
+        R: RangeBounds<usize> + std::fmt::Debug,
+    {
+        let mut res = vec![];
+        let mut lower_bound_reached = false;
+        while !lower_bound_reached || range.contains(&(res.len() + 1)) {
+            if let Some(item) = self.match_line_opt(pattern.clone()) {
+                res.push(item);
             } else {
                 break;
             }
+            if range.contains(&res.len()) {
+                lower_bound_reached = true;
+            }
         }
+        assert!(
+            lower_bound_reached,
+            "not enough lines matched the pattern. {} lines matched, but expected {:?} lines",
+            res.len(),
+            range
+        );
         res
     }
 }
