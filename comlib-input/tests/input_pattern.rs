@@ -12,6 +12,36 @@ fn test_last_pattern() {
 }
 
 #[test]
+fn test_optional_pattern() {
+    let pattern = input_pattern!(
+        String,
+        " bags",
+        " contain ",
+        [usize, " ", String, " bag", "s"?, ", "?],
+        "no other bags"?,
+        "."
+    );
+    assert_eq!(
+        pattern.parse_all("faded blue bags contain no other bags."),
+        Some(("faded blue".to_string(), vec![]))
+    );
+    assert_eq!(
+        pattern.parse_all("bright white bags contain 1 shiny gold bag."),
+        Some((
+            "bright white".to_string(),
+            vec![(1, "shiny gold".to_string())]
+        ))
+    );
+    assert_eq!(
+        pattern.parse_all("muted yellow bags contain 2 shiny gold bags, 9 faded blue bags."),
+        Some((
+            "muted yellow".to_string(),
+            vec![(2, "shiny gold".to_string()), (9, "faded blue".to_string())]
+        ))
+    );
+}
+
+#[test]
 fn test_input_pattern() {
     assert_eq!(
         input_pattern!(usize, "-", usize, " ", char, ": ", String).parse_all("1-2 c: a b"),

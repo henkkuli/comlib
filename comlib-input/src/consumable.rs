@@ -12,6 +12,8 @@ where
 }
 
 /// Parser pattern for parsing input.
+///
+/// The easiest way to implement this trait is to use [`input_pattern`] macro.
 pub trait InputPattern: Clone {
     /// Type the parser produces.
     type Output;
@@ -133,8 +135,9 @@ impl Consumable for String {
 /// The parser can parse variable number of occurrences of the pattern as [`Vec`]s. The variable arguments are enclosed
 /// in `[brackets]` and can contain any valid pattern, including more vectors.
 ///
-/// The last occurrence of a string pattern can be made optional, in which case it is not necessary that it occurs in
-/// the input. This is especially useful when used in vector patterns.
+/// A string pattern can be made optional, in which case it is not necessary that it occurs in the input. Greedy
+/// matching is still stopped at the first occurrence of the pattern if it exists. Optional patterns are especially
+/// useful with vector patterns and to match plurals of words.
 ///
 /// See examples on how to use the `input_pattern`.
 ///
@@ -171,6 +174,15 @@ impl Consumable for String {
 /// assert_eq!(
 ///     input_pattern!([String, " = ", String, " "]).parse_all("key1 = v1 key2 = v2"),
 ///     None
+/// );
+///
+/// // Match both singular and plural form
+/// assert_eq!(
+///     input_pattern!([usize, " ", String, " item", "s"?, ", "?]).parse_all("1 red item, 2 blue items"),
+///     Some(vec![
+///         (1, "red".to_string()),
+///         (2, "blue".to_string()),
+///     ])
 /// );
 /// # }
 /// ```
@@ -249,14 +261,14 @@ macro_rules! input_pattern_impl {
         }
     };
 
-    // Optional pattern at the end may be matched, or not
-    ( @IMPL, $input:expr, @($($consumed:expr),*), $pattern:literal?, ) => {
+    // Optional pattern may be matched, or it may be ignored
+    ( @IMPL, $input:expr, @($($consumed:expr),*), $pattern:literal?, $($rest_pattern:tt)* ) => {
         {
             let input = $input;
             if let Some(rest) = input.strip_prefix($pattern) {
-                input_pattern_impl!(@IMPL, rest, @($($consumed),*),)
+                input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
             } else {
-                input_pattern_impl!(@IMPL, input, @($($consumed),*),)
+                input_pattern_impl!(@IMPL, input, @($($consumed),*), $($rest_pattern)*)
             }
         }
     };
