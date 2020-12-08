@@ -73,7 +73,7 @@ macro_rules! float_pattern {
             if first {
                 first = false;
                 has_dot = c == '.';
-                matches!(c, '-' | '.' | '0'..='9')
+                matches!(c, '+' | '-' | '.' | '0'..='9')
             } else if !has_dot {
                 has_dot = c == '.';
                 matches!(c, '.' | '0'..='9')

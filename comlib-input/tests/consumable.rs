@@ -76,4 +76,7 @@ fn test_consume_f32() {
     assert_eq!(f32::consume("-0123.4"), Ok((-123.4, "")));
     assert_eq!(f32::consume("123.4.5"), Ok((123.4, ".5")));
     assert_eq!(f32::consume(".4.5"), Ok((0.4, ".5")));
+
+    assert_eq!(f32::consume("+123.4"), Ok((123.4, "")));
+    assert_eq!(f32::consume("+123"), Ok((123., "")));
 }
