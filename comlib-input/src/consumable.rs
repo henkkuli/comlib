@@ -51,13 +51,13 @@ macro_rules! consumable {
     };
 }
 
-macro_rules! signed_pattern {
-    () => {{
+macro_rules! int_pattern {
+    ($($sign:tt)+) => {{
         let mut first = true;
         move |c| {
             if first {
                 first = false;
-                matches!(c, '-' | '0'..='9')
+                matches!(c, $($sign)+ | '0'..='9')
             } else {
                 matches!(c, '0'..='9')
             }
@@ -96,18 +96,18 @@ consumable!(
     },
     std::char::ParseCharError
 );
-consumable!(u8, |c| matches!(c, '0'..='9'), std::num::ParseIntError);
-consumable!(i8, signed_pattern!(), std::num::ParseIntError);
-consumable!(u16, |c| matches!(c, '0'..='9'), std::num::ParseIntError);
-consumable!(i16, signed_pattern!(), std::num::ParseIntError);
-consumable!(u32, |c| matches!(c, '0'..='9'), std::num::ParseIntError);
-consumable!(i32, signed_pattern!(), std::num::ParseIntError);
-consumable!(u64, |c| matches!(c, '0'..='9'), std::num::ParseIntError);
-consumable!(i64, signed_pattern!(), std::num::ParseIntError);
-consumable!(u128, |c| matches!(c, '0'..='9'), std::num::ParseIntError);
-consumable!(i128, signed_pattern!(), std::num::ParseIntError);
-consumable!(usize, |c| matches!(c, '0'..='9'), std::num::ParseIntError);
-consumable!(isize, signed_pattern!(), std::num::ParseIntError);
+consumable!(u8, int_pattern!('+'), std::num::ParseIntError);
+consumable!(i8, int_pattern!('+' | '-'), std::num::ParseIntError);
+consumable!(u16, int_pattern!('+'), std::num::ParseIntError);
+consumable!(i16, int_pattern!('+' | '-'), std::num::ParseIntError);
+consumable!(u32, int_pattern!('+'), std::num::ParseIntError);
+consumable!(i32, int_pattern!('+' | '-'), std::num::ParseIntError);
+consumable!(u64, int_pattern!('+'), std::num::ParseIntError);
+consumable!(i64, int_pattern!('+' | '-'), std::num::ParseIntError);
+consumable!(u128, int_pattern!('+'), std::num::ParseIntError);
+consumable!(i128, int_pattern!('+' | '-'), std::num::ParseIntError);
+consumable!(usize, int_pattern!('+'), std::num::ParseIntError);
+consumable!(isize, int_pattern!('+' | '-'), std::num::ParseIntError);
 consumable!(f32, float_pattern!(), std::num::ParseFloatError);
 consumable!(f64, float_pattern!(), std::num::ParseFloatError);
 

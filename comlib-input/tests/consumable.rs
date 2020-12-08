@@ -12,6 +12,9 @@ fn test_consume_usize() {
     assert!(usize::consume("ads 123").is_err());
     assert!(usize::consume("").is_err());
     assert!(usize::consume("a123 1234").is_err());
+
+    assert_eq!(usize::consume("+123"), Ok((123, "")));
+    assert_eq!(usize::consume("+123 "), Ok((123, " ")));
 }
 
 #[test]
@@ -39,6 +42,9 @@ fn test_consume_isize() {
     assert!(isize::consume("").is_err());
     assert!(isize::consume("-").is_err());
     assert!(isize::consume("-a123 1234").is_err());
+
+    assert_eq!(isize::consume("+123"), Ok((123, "")));
+    assert_eq!(isize::consume("+123 "), Ok((123, " ")));
 }
 
 #[test]
