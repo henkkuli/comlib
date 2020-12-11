@@ -52,6 +52,15 @@ fn test_match_lines() {
 }
 
 #[test]
+fn test_match_string_lines() {
+    let input = "l1\nl2\n";
+    assert_eq!(
+        Input::from(Cursor::new(input)).match_lines(input_pattern!(String), ..),
+        vec!["l1".to_string(), "l2".to_string()]
+    );
+}
+
+#[test]
 fn test_match_no_lines() {
     let input = "hello\n";
     assert_eq!(

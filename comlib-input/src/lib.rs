@@ -1,4 +1,4 @@
-use std::io::{BufRead, Error, Stdin, StdinLock};
+use std::io::{BufRead, Error, ErrorKind, Stdin, StdinLock};
 use std::{ops::RangeBounds, str::FromStr};
 
 mod consumable;
@@ -20,31 +20,33 @@ impl<T> Input<T>
 where
     T: BufRead,
 {
-    /// Peek next line of the input without consuming it.
-    pub fn peek_line(&mut self) -> Result<&str, Error> {
+    /// Update cache containing next line.
+    fn update_cache(&mut self) -> Result<(), Error> {
         if self.1.is_none() {
             let mut line = String::new();
-            self.0.read_line(&mut line)?;
+            let read_len = self.0.read_line(&mut line)?;
+            if read_len == 0 {
+                // Nothing found, this has to be the end
+                return Err(ErrorKind::Other.into());
+            }
             // Trim control characters from the end
             while line.chars().last().map(|c| c.is_control()).unwrap_or(false) {
                 line.pop();
             }
             self.1 = Some(line);
         }
+        Ok(())
+    }
+
+    /// Peek next line of the input without consuming it.
+    pub fn peek_line(&mut self) -> Result<&str, Error> {
+        self.update_cache()?;
         Ok(self.1.as_ref().unwrap())
     }
 
     /// Read the next line of the input and consume it.
     pub fn read_line(&mut self) -> Result<String, Error> {
-        if self.1.is_none() {
-            let mut line = String::new();
-            self.0.read_line(&mut line)?;
-            // Trim control characters from the end
-            while line.chars().last().map(|c| c.is_control()).unwrap_or(false) {
-                line.pop();
-            }
-            self.1 = Some(line);
-        }
+        self.update_cache()?;
         Ok(self.1.take().unwrap())
     }
 
