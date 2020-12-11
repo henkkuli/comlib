@@ -52,6 +52,15 @@ fn test_match_lines() {
 }
 
 #[test]
+fn test_match_no_lines() {
+    let input = "hello\n";
+    assert_eq!(
+        Input::from(Cursor::new(input)).match_lines(input_pattern!(usize), ..),
+        vec![]
+    );
+}
+
+#[test]
 #[should_panic]
 fn test_match_too_few_lines() {
     let input = "1\n2\n3\n4\n5\n6";

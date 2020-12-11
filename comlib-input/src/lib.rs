@@ -99,7 +99,7 @@ where
         R: RangeBounds<usize> + std::fmt::Debug,
     {
         let mut res = vec![];
-        let mut lower_bound_reached = false;
+        let mut lower_bound_reached = range.contains(&0);
         while !lower_bound_reached || range.contains(&(res.len() + 1)) {
             if let Some(item) = self.match_line_opt(pattern.clone()) {
                 res.push(item);
