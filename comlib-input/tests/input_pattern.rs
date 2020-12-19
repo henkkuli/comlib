@@ -122,3 +122,13 @@ fn test_input_pattern() {
         ])
     );
 }
+
+#[test]
+fn test_array_of_strings() {
+    assert_eq!(
+        input_pattern!([String, " "?]).parse_all("a b c"),
+        Some(vec!["a".to_string(), "b".to_string(), "c".to_string()])
+    );
+
+    assert_eq!(input_pattern!([String, " "?]).parse_all(""), Some(vec![]));
+}

@@ -224,9 +224,14 @@ macro_rules! input_pattern_impl {
             let parser = input_pattern!($($inner)+);
             let mut vec = Vec::new();
             let mut input = $input;
-            while let Some((parsed, rest)) = parser.parse_prefix(input) {
-                vec.push(parsed);
-                input = rest;
+            if input != ""{
+                while let Some((parsed, rest)) = parser.parse_prefix(input) {
+                    vec.push(parsed);
+                    input = rest;
+                    if input == "" {
+                        break;
+                    }
+                }
             }
             input_pattern_impl!(@IMPL, input, @($($consumed,)* vec), $($rest_pattern)*)
         }
