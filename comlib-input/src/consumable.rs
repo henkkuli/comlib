@@ -218,7 +218,26 @@ macro_rules! input_pattern_impl {
         input_pattern_impl!(@IMPL, $input, @(), $($rest_pattern)*, )
     };
 
-    // Arrays are greedily matched
+    // Arrays followed by a non-optional pattern are matched until the pattern
+    ( @IMPL, $input:expr, @($($consumed:expr),*), [$($inner:tt)+], $pattern:literal, $($rest_pattern:tt)* ) => {
+        {
+            {
+                let input = $input;
+                let array_pattern = input_pattern!([$($inner)+]);
+                let mut parts = input.splitn(2, $pattern);
+                let array = parts.next().unwrap();
+                let rest = input.split_at(array.len()).1;
+                match array_pattern.parse_all(array) {
+                    Some(content) => {
+                        input_pattern_impl!(@IMPL, rest, @($($consumed,)* content), $pattern, $($rest_pattern)*)
+                    }
+                    None => None,
+                }
+            }
+        }
+    };
+
+    // Other arrays are greedily matched
     ( @IMPL, $input:expr, @($($consumed:expr),*), [$($inner:tt)+], $($rest_pattern:tt)* ) => {
         {
             let parser = input_pattern!($($inner)+);

@@ -132,3 +132,25 @@ fn test_array_of_strings() {
 
     assert_eq!(input_pattern!([String, " "?]).parse_all(""), Some(vec![]));
 }
+
+#[test]
+fn test_non_greedy_array_matching() {
+    assert_eq!(
+        input_pattern!([String, " "?], "(", String, ")").parse_all("a b (suffix)"),
+        Some((vec!["a".to_string(), "b".to_string()], "suffix".to_string()))
+    );
+
+    assert_eq!(
+        input_pattern!([String, " "?], " (", String, ")").parse_all("a b (suffix)"),
+        Some((vec!["a".to_string(), "b".to_string()], "suffix".to_string()))
+    );
+
+    assert_eq!(
+        input_pattern!([String, " "], "(contain ", [String, ", "?], ")")
+            .parse_all("a b (contain c, d)"),
+        Some((
+            vec!["a".to_string(), "b".to_string()],
+            vec!["c".to_string(), "d".to_string()]
+        ))
+    );
+}
