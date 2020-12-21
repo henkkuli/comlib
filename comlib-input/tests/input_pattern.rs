@@ -48,7 +48,7 @@ fn test_input_pattern() {
         Some((1, 2, 'c', "a b".to_string()))
     );
     assert_eq!(
-        input_pattern!(String, ' ', String, ' ', String).parse_all("word1 word2 word3"),
+        input_pattern!(String, " ", String, " ", String).parse_all("word1 word2 word3"),
         Some((
             "word1".to_string(),
             "word2".to_string(),
@@ -57,16 +57,16 @@ fn test_input_pattern() {
     );
 
     assert_eq!(
-        input_pattern!(String, ' ', usize, ' ', String).parse_all("word1 word2 word3"),
+        input_pattern!(String, " ", usize, " ", String).parse_all("word1 word2 word3"),
         None
     );
 
     assert_eq!(
-        input_pattern!(String, ' ', usize, ' ', String).parse_all("word1 123word2 word3"),
+        input_pattern!(String, " ", usize, " ", String).parse_all("word1 123word2 word3"),
         None
     );
     assert_eq!(
-        input_pattern!(String, ' ', usize, String, ' ', String).parse_all("word1 123word2 word3"),
+        input_pattern!(String, " ", usize, String, " ", String).parse_all("word1 123word2 word3"),
         Some((
             "word1".to_string(),
             123,

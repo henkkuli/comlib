@@ -208,7 +208,7 @@ macro_rules! input_pattern {
 #[macro_export]
 macro_rules! input_pattern_impl {
     ( @START, $input:expr, $pattern:literal, $($rest_pattern:tt)+ ) => {
-        if let Some(rest) = $input.strip_prefix($pattern) {
+        if let Some(rest) = $crate::strip_prefix($input, $pattern) {
             input_pattern_impl!(@IMPL, rest, @(), $($rest_pattern)*, )
         } else {
             None
@@ -289,7 +289,7 @@ macro_rules! input_pattern_impl {
     ( @IMPL, $input:expr, @($($consumed:expr),*), $pattern:literal?, $($rest_pattern:tt)* ) => {
         {
             let input = $input;
-            if let Some(rest) = input.strip_prefix($pattern) {
+            if let Some(rest) = $crate::strip_prefix(input, $pattern) {
                 input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
             } else {
                 input_pattern_impl!(@IMPL, input, @($($consumed),*), $($rest_pattern)*)
@@ -299,7 +299,7 @@ macro_rules! input_pattern_impl {
 
     // Pattern must be matched
     ( @IMPL, $input:expr, @($($consumed:expr),*), $pattern:literal, $($rest_pattern:tt)* ) => {
-        if let Some(rest) = $input.strip_prefix($pattern) {
+        if let Some(rest) = $crate::strip_prefix($input, $pattern) {
             input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
         } else {
             None
@@ -337,4 +337,14 @@ macro_rules! input_pattern_impl {
     ( @OUT, @($($types:ty),*), ) => {
         ($($types),*)
     };
+}
+
+/// Backport of str::strip_prefix
+#[doc(hidden)]
+pub fn strip_prefix<'a>(string: &'a str, prefix: &str) -> Option<&'a str> {
+    if string.starts_with(prefix) {
+        Some(string.split_at(prefix.len()).1)
+    } else {
+        None
+    }
 }

@@ -2,7 +2,7 @@ use std::io::{BufRead, Error, ErrorKind, Stdin, StdinLock};
 use std::{ops::RangeBounds, str::FromStr};
 
 mod consumable;
-pub use consumable::{Consumable, InputPattern};
+pub use consumable::{strip_prefix, Consumable, InputPattern};
 
 /// Helper for reading objects implementing [`InputPattern`] trait.
 pub struct Input<T>(T, Option<String>);
@@ -54,7 +54,7 @@ where
     ///
     /// # Panics
     /// Panics if the line can't be converted to `U`.
-    #[track_caller]
+    // #[track_caller] // TODO: Once submission environments accept this, add back
     pub fn parse_line<U: FromStr>(&mut self) -> U {
         self.parse_line_opt().unwrap()
     }
@@ -74,7 +74,7 @@ where
     ///
     /// # Panics
     /// Panics if the line doesn't match the pattern.
-    #[track_caller]
+    // #[track_caller] // TODO: Once submission environments accept this, add back
     pub fn match_line<P: InputPattern>(&mut self, pattern: P) -> P::Output {
         self.match_line_opt(pattern).unwrap()
     }
@@ -94,7 +94,7 @@ where
     ///
     /// # Panics
     /// Panics if not enough of the lines match the pattern.
-    #[track_caller]
+    // #[track_caller] // TODO: Once submission environments accept this, add back
     pub fn match_lines<P, R>(&mut self, pattern: P, range: R) -> Vec<P::Output>
     where
         P: InputPattern,
