@@ -1,4 +1,3 @@
-use comlib_common::MiniMap;
 use std::collections::HashMap;
 
 #[test]

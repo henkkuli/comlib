@@ -7,6 +7,5 @@
 //! ## Still missing
 //! Whatever seems useful for implementing Comlib.
 
-
 mod minimap;
 pub use minimap::MiniMap;

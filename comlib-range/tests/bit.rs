@@ -14,7 +14,7 @@ fn test_bit_sum() {
 
     assert_eq!(bit.sum(5..=5), 6);
     assert_eq!(bit.sum(1..=5), 20);
-    
+
     assert_eq!(bit.sum(..), 28);
     assert_eq!(bit.sum(2..), 25);
     assert_eq!(bit.sum(..3), 6);
