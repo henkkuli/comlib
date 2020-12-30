@@ -1,0 +1,8 @@
+[package]
+name = "comlib-math"
+version = "0.1.0"
+authors = ["Henrik Lievonen <henrik.lievonen@hotmail.com>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.7"
