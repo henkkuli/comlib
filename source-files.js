@@ -4,6 +4,7 @@ sourcesIndex["comlib_common"] = {"name":"","files":["lib.rs","minimap.rs"]};
 sourcesIndex["comlib_input"] = {"name":"","files":["consumable.rs","lib.rs"]};
 sourcesIndex["comlib_math"] = {"name":"","files":["lib.rs","modint.rs","number_theory.rs","numtraits.rs"]};
 sourcesIndex["comlib_range"] = {"name":"","files":["bit.rs","lib.rs"]};
+sourcesIndex["comlib_string"] = {"name":"","files":["lib.rs","rolling_hash.rs"]};
 sourcesIndex["getrandom"] = {"name":"","files":["error.rs","error_impls.rs","lib.rs","linux_android.rs","use_file.rs","util.rs","util_libc.rs"]};
 sourcesIndex["libc"] = {"name":"","dirs":[{"name":"unix","dirs":[{"name":"linux_like","dirs":[{"name":"linux","dirs":[{"name":"gnu","dirs":[{"name":"b64","dirs":[{"name":"x86_64","files":["align.rs","mod.rs","not_x32.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["fixed_width_ints.rs","lib.rs","macros.rs"]};
 sourcesIndex["ppv_lite86"] = {"name":"","dirs":[{"name":"x86_64","files":["mod.rs","sse2.rs"]}],"files":["lib.rs","soft.rs","types.rs"]};
