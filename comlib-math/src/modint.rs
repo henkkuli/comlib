@@ -141,6 +141,11 @@ impl<M: Modulus + Copy> ModInt<M> {
     pub fn inv(self) -> Self {
         self.pow(self.1.inverse_power())
     }
+
+    /// Returns the modulus used.
+    pub fn modulus(self) -> M {
+        self.1
+    }
 }
 
 impl<M: Modulus + Copy> Clone for ModInt<M> {
@@ -176,6 +181,16 @@ impl<M: Modulus + Copy> PartialEq for ModInt<M> {
     }
 }
 impl<M: Modulus + Copy> Eq for ModInt<M> {}
+
+impl<M: Modulus + Copy> From<u8> for ModInt<M>
+where
+    M: Default,
+{
+    fn from(val: u8) -> Self {
+        let modulus: M = Default::default();
+        Self(M::Base::from(val) % modulus.modulus(), modulus)
+    }
+}
 
 impl<M: Modulus + Copy> From<u64> for ModInt<M>
 where
