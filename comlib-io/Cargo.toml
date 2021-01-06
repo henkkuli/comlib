@@ -1,5 +1,5 @@
 [package]
-name = "comlib-input"
+name = "comlib-io"
 version = "0.1.0"
 authors = ["Henrik Lievonen <henrik.lievonen@hotmail.com>"]
 edition = "2018"

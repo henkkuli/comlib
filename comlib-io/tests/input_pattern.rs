@@ -1,4 +1,4 @@
-use comlib_input::*;
+use comlib_io::*;
 
 #[test]
 fn test_last_pattern() {

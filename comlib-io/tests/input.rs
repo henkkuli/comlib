@@ -1,4 +1,4 @@
-use comlib_input::*;
+use comlib_io::*;
 use std::io::Cursor;
 
 #[test]

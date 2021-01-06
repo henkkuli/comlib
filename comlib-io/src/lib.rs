@@ -4,6 +4,9 @@ use std::{ops::RangeBounds, str::FromStr};
 mod consumable;
 pub use consumable::{strip_prefix, Consumable, InputPattern};
 
+mod writer;
+pub use writer::{spaced};
+
 /// Helper for reading objects implementing [`InputPattern`] trait.
 pub struct Input<T>(T, Option<String>);
 

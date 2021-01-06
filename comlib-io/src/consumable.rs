@@ -147,10 +147,9 @@ impl Consumable for String {
 ///
 /// # Examples
 /// ```rust
-/// # #[macro_use] extern crate comlib_input;
-/// # use comlib_input::input_pattern;
+/// # #[macro_use] extern crate comlib_io;
 /// # fn main() {
-/// use comlib_input::{input_pattern, InputPattern};
+/// use comlib_io::{input_pattern, InputPattern};
 ///
 /// // Parse two numerals separated by a space
 /// assert_eq!(input_pattern!(usize, " ", usize).parse_all("1 2"), Some((1, 2)));
