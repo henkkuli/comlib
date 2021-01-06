@@ -1,6 +1,6 @@
 (function() {var implementors = {};
 implementors["comlib_common"] = [{"text":"impl&lt;K, V&gt; Freeze for MiniMap&lt;K, V&gt;","synthetic":true,"types":[]}];
-implementors["comlib_input"] = [{"text":"impl&lt;T&gt; Freeze for Input&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Freeze,&nbsp;</span>","synthetic":true,"types":[]}];
+implementors["comlib_io"] = [{"text":"impl&lt;T&gt; Freeze for Input&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Freeze,&nbsp;</span>","synthetic":true,"types":[]}];
 implementors["comlib_math"] = [{"text":"impl Freeze for Mod1e9p7","synthetic":true,"types":[]},{"text":"impl&lt;M&gt; Freeze for ModInt&lt;M&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;M: Freeze,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;M as Modulus&gt;::Base: Freeze,&nbsp;</span>","synthetic":true,"types":[]},{"text":"impl&lt;T&gt; Freeze for RuntimePrimeModulus&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Freeze,&nbsp;</span>","synthetic":true,"types":[]}];
 implementors["comlib_range"] = [{"text":"impl&lt;T&gt; Freeze for Bit&lt;T&gt;","synthetic":true,"types":[]}];
 implementors["comlib_string"] = [{"text":"impl&lt;M&gt; Freeze for RollingHash&lt;M&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;M: Freeze,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;M as Modulus&gt;::Base: Freeze,&nbsp;</span>","synthetic":true,"types":[]}];

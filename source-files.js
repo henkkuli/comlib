@@ -1,7 +1,7 @@
 var N = null;var sourcesIndex = {};
 sourcesIndex["cfg_if"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["comlib_common"] = {"name":"","files":["lib.rs","minimap.rs"]};
-sourcesIndex["comlib_input"] = {"name":"","files":["consumable.rs","lib.rs"]};
+sourcesIndex["comlib_io"] = {"name":"","files":["consumable.rs","lib.rs","writer.rs"]};
 sourcesIndex["comlib_math"] = {"name":"","files":["lib.rs","modint.rs","number_theory.rs","numtraits.rs"]};
 sourcesIndex["comlib_range"] = {"name":"","files":["bit.rs","lib.rs"]};
 sourcesIndex["comlib_string"] = {"name":"","files":["lib.rs","rolling_hash.rs"]};

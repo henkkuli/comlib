@@ -1,1 +1,0 @@
-initSidebarItems({"macro":[["input_pattern","Pattern for parsing input"]],"struct":[["Input","Helper for reading objects implementing [`InputPattern`] trait."]],"trait":[["Consumable","Value which can be greedily consumed from `&str`."],["InputPattern","Parser pattern for parsing input."]]});
