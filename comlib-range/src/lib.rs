@@ -7,5 +7,7 @@
 //! ## Still missing
 //! - Segment tree
 
+#![warn(missing_docs)]
+
 mod bit;
 pub use bit::Bit;
