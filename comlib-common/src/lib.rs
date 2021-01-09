@@ -7,5 +7,7 @@
 //! ## Still missing
 //! Whatever seems useful for implementing Comlib.
 
+#![warn(missing_docs)]
+
 mod minimap;
 pub use minimap::MiniMap;
