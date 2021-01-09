@@ -17,6 +17,7 @@ The easiest way to use this library is to include all of the relevant parts as d
 comlib-io = { git = "https://github.com/henkkuli/comlib" }
 comlib-math = { git = "https://github.com/henkkuli/comlib" }
 comlib-range = { git = "https://github.com/henkkuli/comlib" }
+comlib-string = { git = "https://github.com/henkkuli/comlib" }
 ```
 and then use [`cargo equip`](https://crates.io/crates/cargo-equip) to compile your code into a single file:
 ```bash

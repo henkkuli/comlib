@@ -207,7 +207,7 @@ impl PrimeSieve {
     }
 
     /// Turns the sieve into raw vector telling the largest prime divisor for each index.
-    pub fn into_inner(self) -> Vec<u64>{
+    pub fn into_inner(self) -> Vec<u64> {
         self.0
     }
 }
