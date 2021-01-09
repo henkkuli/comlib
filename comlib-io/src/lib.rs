@@ -1,3 +1,25 @@
+//! # Comlib Input/Output Utilities
+//! This library contains commonly needed utilities for handling IO.
+//!
+//! The most commonly needed API is the [`Input`] struct which can be used to parse input. The following code reads a
+//! line count `n` from the standard input and then reads the following `n` lines, each containing a pair of numbers.
+//! ```
+//! use comlib_io::*;
+//! let stdin = std::io::stdin();
+//! let mut input = Input::from_stdin(&stdin);
+//! #
+//! # // For actual testing, let's produce some input
+//! # let mut input = Input::from(std::io::Cursor::new("1\n1 2"));
+//! let n = input.match_line(input_pattern!(usize));
+//! let queries = input.match_lines(input_pattern!(usize, " ", usize), n..=n);
+//! ```
+//!
+//! The library also contains some useful utilities for printing out multiple values. Currently the following wrappers
+//! are supported:
+//! - [Writing space-separated values](spaced)
+
+#![warn(missing_docs)]
+
 use std::io::{BufRead, Error, ErrorKind, Stdin, StdinLock};
 use std::{ops::RangeBounds, str::FromStr};
 
@@ -5,7 +27,7 @@ mod consumable;
 pub use consumable::{strip_prefix, Consumable, InputPattern};
 
 mod writer;
-pub use writer::{spaced};
+pub use writer::spaced;
 
 /// Helper for reading objects implementing [`InputPattern`] trait.
 pub struct Input<T>(T, Option<String>);

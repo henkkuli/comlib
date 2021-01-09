@@ -3,7 +3,9 @@ pub trait Consumable
 where
     Self: Sized,
 {
+    /// Type for representing errors which can happen during consuming values.
     type InputError;
+
     /// Consume input from the given `&str`.
     ///
     /// In case of success, returns the consumed value and the rest of the string.
