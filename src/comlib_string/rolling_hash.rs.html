@@ -110,7 +110,7 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Bound</span>, <span class="ident">RangeBounds</span>};
 
-<span class="kw">use</span> <span class="ident">comlib_math</span>::{<span class="ident">Mod1e9p7</span>, <span class="ident">ModInt</span>, <span class="ident">Modulus</span>};
+<span class="kw">use</span> <span class="ident">comlib_math</span>::{<span class="ident">InvertibleModulus</span>, <span class="ident">Mod1e9p7</span>, <span class="ident">ModInt</span>};
 <span class="kw">use</span> <span class="ident">comlib_range</span>::<span class="ident">Bit</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">RngCore</span>};
 
@@ -135,7 +135,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RollingHash</span><span class="op">&lt;</span><span class="ident">M</span> <span class="op">=</span> <span class="ident">Mod1e9p7</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">M</span>: <span class="ident">Modulus</span> <span class="op">+</span> <span class="ident">Copy</span>,
+    <span class="ident">M</span>: <span class="ident">InvertibleModulus</span> <span class="op">+</span> <span class="ident">Copy</span>,
 {
     <span class="doccomment">/// Terms of the hash</span>
     <span class="ident">hashes</span>: <span class="ident">Bit</span><span class="op">&lt;</span><span class="ident">ModInt</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span><span class="op">&gt;</span>,
@@ -147,7 +147,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="ident">RollingHash</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">M</span>: <span class="ident">Modulus</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Default</span>,
+    <span class="ident">M</span>: <span class="ident">InvertibleModulus</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Default</span>,
     <span class="ident">M</span>::<span class="ident">Base</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Constructs new `RollingHash`.</span>
