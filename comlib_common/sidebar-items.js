@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["MiniMap","Minimal map-like data structure. Optimized for small number of elements."]]});
+initSidebarItems({"struct":[["MiniMap","Map data structure optimized for small number of elements."]]});

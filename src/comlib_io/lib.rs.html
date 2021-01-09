@@ -136,7 +136,51 @@
 <span id="133">133</span>
 <span id="134">134</span>
 <span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! # Comlib Input/Output Utilities</span>
+<span class="doccomment">//! This library contains commonly needed utilities for handling IO.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The most commonly needed API is the [`Input`] struct which can be used to parse input. The following code reads a</span>
+<span class="doccomment">//! line count `n` from the standard input and then reads the following `n` lines, each containing a pair of numbers.</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use comlib_io::*;</span>
+<span class="doccomment">//! let stdin = std::io::stdin();</span>
+<span class="doccomment">//! let mut input = Input::from_stdin(&amp;stdin);</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # // For actual testing, let&#39;s produce some input</span>
+<span class="doccomment">//! # let mut input = Input::from(std::io::Cursor::new(&quot;1\n1 2&quot;));</span>
+<span class="doccomment">//! let n = input.match_line(input_pattern!(usize));</span>
+<span class="doccomment">//! let queries = input.match_lines(input_pattern!(usize, &quot; &quot;, usize), n..=n);</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The library also contains some useful utilities for printing out multiple values. Currently the following wrappers</span>
+<span class="doccomment">//! are supported:</span>
+<span class="doccomment">//! - [Writing space-separated values](spaced)</span>
+
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
+
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">BufRead</span>, <span class="ident">Error</span>, <span class="ident">ErrorKind</span>, <span class="ident">Stdin</span>, <span class="ident">StdinLock</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ops</span>::<span class="ident">RangeBounds</span>, <span class="ident">str</span>::<span class="ident">FromStr</span>};
 
@@ -144,7 +188,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">consumable</span>::{<span class="ident">strip_prefix</span>, <span class="ident">Consumable</span>, <span class="ident">InputPattern</span>};
 
 <span class="kw">mod</span> <span class="ident">writer</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">writer</span>::{<span class="ident">spaced</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">writer</span>::<span class="ident">spaced</span>;
 
 <span class="doccomment">/// Helper for reading objects implementing [`InputPattern`] trait.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Input</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">T</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>);
