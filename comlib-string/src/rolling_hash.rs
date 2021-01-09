@@ -1,6 +1,6 @@
 use std::ops::{Bound, RangeBounds};
 
-use comlib_math::{Mod1e9p7, ModInt, Modulus};
+use comlib_math::{InvertibleModulus, Mod1e9p7, ModInt};
 use comlib_range::Bit;
 use rand::{thread_rng, RngCore};
 
@@ -25,7 +25,7 @@ use rand::{thread_rng, RngCore};
 #[derive(Clone)]
 pub struct RollingHash<M = Mod1e9p7>
 where
-    M: Modulus + Copy,
+    M: InvertibleModulus + Copy,
 {
     /// Terms of the hash
     hashes: Bit<ModInt<M>>,
@@ -37,7 +37,7 @@ where
 
 impl<M> RollingHash<M>
 where
-    M: Modulus + Copy + Default,
+    M: InvertibleModulus + Copy + Default,
     M::Base: From<u64>,
 {
     /// Constructs new `RollingHash`.
