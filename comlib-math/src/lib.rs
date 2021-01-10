@@ -9,6 +9,7 @@
 //! - [Factorization](factorize)
 //! - [Modular exponentiation](mod_pow)
 //! - [Finding next permutation of a list](next_permutation)
+//! - [Iterating over subsets](subsets())
 //!
 //! ## Still missing
 //! - Fourier Transform, both number theoretic and complex
@@ -28,3 +29,6 @@ pub use number_theory::{factorize, gcd, is_prime, mod_pow, PrimeSieve};
 
 mod permutations;
 pub use permutations::next_permutation;
+
+pub mod subsets;
+pub use subsets::subsets;
