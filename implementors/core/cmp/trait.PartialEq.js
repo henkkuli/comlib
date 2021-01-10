@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["comlib_math"] = [{"text":"impl&lt;M:&nbsp;Modulus&gt; PartialEq&lt;ModInt&lt;M&gt;&gt; for ModInt&lt;M&gt;","synthetic":false,"types":[]}];
+implementors["comlib_math"] = [{"text":"impl&lt;M:&nbsp;Modulus&gt; PartialEq&lt;ModInt&lt;M&gt;&gt; for ModInt&lt;M&gt;","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Subset&gt; for Subset","synthetic":false,"types":[]}];
 implementors["comlib_range"] = [{"text":"impl&lt;T:&nbsp;PartialEq&gt; PartialEq&lt;Bit&lt;T&gt;&gt; for Bit&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["getrandom"] = [{"text":"impl PartialEq&lt;Error&gt; for Error","synthetic":false,"types":[]}];
 implementors["ppv_lite86"] = [{"text":"impl PartialEq&lt;vec128_storage&gt; for vec128_storage","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;vec256_storage&gt; for vec256_storage","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;vec512_storage&gt; for vec512_storage","synthetic":false,"types":[]}];

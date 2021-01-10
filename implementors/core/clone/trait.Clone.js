@@ -1,6 +1,6 @@
 (function() {var implementors = {};
 implementors["comlib_common"] = [{"text":"impl&lt;K:&nbsp;Clone, V:&nbsp;Clone&gt; Clone for MiniMap&lt;K, V&gt;","synthetic":false,"types":[]}];
-implementors["comlib_math"] = [{"text":"impl&lt;M:&nbsp;Modulus&gt; Clone for ModInt&lt;M&gt;","synthetic":false,"types":[]},{"text":"impl Clone for Mod1e9p7","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Clone&gt; Clone for RuntimeModulus&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Clone&gt; Clone for RuntimePrimeModulus&lt;T&gt;","synthetic":false,"types":[]}];
+implementors["comlib_math"] = [{"text":"impl&lt;M:&nbsp;Modulus&gt; Clone for ModInt&lt;M&gt;","synthetic":false,"types":[]},{"text":"impl Clone for Mod1e9p7","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Clone&gt; Clone for RuntimeModulus&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Clone&gt; Clone for RuntimePrimeModulus&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl Clone for Subsets","synthetic":false,"types":[]},{"text":"impl Clone for Subset","synthetic":false,"types":[]}];
 implementors["comlib_range"] = [{"text":"impl&lt;T:&nbsp;Clone&gt; Clone for Bit&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["comlib_string"] = [{"text":"impl&lt;M:&nbsp;Clone&gt; Clone for RollingHash&lt;M&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;M: InvertibleModulus + Copy,&nbsp;</span>","synthetic":false,"types":[]}];
 implementors["getrandom"] = [{"text":"impl Clone for Error","synthetic":false,"types":[]}];

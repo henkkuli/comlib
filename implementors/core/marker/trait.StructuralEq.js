@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["comlib_math"] = [{"text":"impl StructuralEq for Subset","synthetic":false,"types":[]}];
 implementors["comlib_range"] = [{"text":"impl&lt;T&gt; StructuralEq for Bit&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["getrandom"] = [{"text":"impl StructuralEq for Error","synthetic":false,"types":[]}];
 implementors["rand"] = [{"text":"impl StructuralEq for BernoulliError","synthetic":false,"types":[]},{"text":"impl StructuralEq for WeightedError","synthetic":false,"types":[]}];

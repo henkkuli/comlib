@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["subsets","Constructs an iterator over subsets of given size."]],"struct":[["Subset","Subset of some elements."],["SubsetIter","An iterator selecting elements based on a subset."],["Subsets","Iterator over subsets."]]});
