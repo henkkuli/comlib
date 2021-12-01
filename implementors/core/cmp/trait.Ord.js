@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["comlib_math"] = [{"text":"impl Ord for Subset","synthetic":false,"types":[]}];
+implementors["comlib_math"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.56.1/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"struct\" href=\"comlib_math/subsets/struct.Subset.html\" title=\"struct comlib_math::subsets::Subset\">Subset</a>","synthetic":false,"types":["comlib_math::subsets::Subset"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
