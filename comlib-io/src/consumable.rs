@@ -195,9 +195,9 @@ macro_rules! input_pattern {
             #[derive(Copy, Clone, Debug)]
             struct Pattern;
             impl $crate::InputPattern for Pattern {
-                type Output = input_pattern_impl!(@OUT, @(), $($pattern)*, );
+                type Output = $crate::input_pattern_impl!(@OUT, @(), $($pattern)*, );
                 fn parse_prefix<'a>(&self, input: &'a str) -> Option<(Self::Output, &'a str)> {
-                    input_pattern_impl!(@START, input, $($pattern)+ )
+                    $crate::input_pattern_impl!(@START, input, $($pattern)+ )
                 }
             }
             Pattern
@@ -210,13 +210,13 @@ macro_rules! input_pattern {
 macro_rules! input_pattern_impl {
     ( @START, $input:expr, $pattern:literal, $($rest_pattern:tt)+ ) => {
         if let Some(rest) = $crate::strip_prefix($input, $pattern) {
-            input_pattern_impl!(@IMPL, rest, @(), $($rest_pattern)*, )
+            $crate::input_pattern_impl!(@IMPL, rest, @(), $($rest_pattern)*, )
         } else {
             None
         }
     };
     ( @START, $input:expr, $($rest_pattern:tt)+ ) => {
-        input_pattern_impl!(@IMPL, $input, @(), $($rest_pattern)*, )
+        $crate::input_pattern_impl!(@IMPL, $input, @(), $($rest_pattern)*, )
     };
 
     // Arrays followed by a non-optional pattern are matched until the pattern
@@ -230,7 +230,7 @@ macro_rules! input_pattern_impl {
                 let rest = input.split_at(array.len()).1;
                 match array_pattern.parse_all(array) {
                     Some(content) => {
-                        input_pattern_impl!(@IMPL, rest, @($($consumed,)* content), $pattern, $($rest_pattern)*)
+                        $crate::input_pattern_impl!(@IMPL, rest, @($($consumed,)* content), $pattern, $($rest_pattern)*)
                     }
                     None => None,
                 }
@@ -253,7 +253,7 @@ macro_rules! input_pattern_impl {
                     }
                 }
             }
-            input_pattern_impl!(@IMPL, input, @($($consumed,)* vec), $($rest_pattern)*)
+            $crate::input_pattern_impl!(@IMPL, input, @($($consumed,)* vec), $($rest_pattern)*)
         }
     };
 
@@ -266,7 +266,7 @@ macro_rules! input_pattern_impl {
             let rest = input.split_at(item.len()).1;
             match item.parse::<$type>() {
                 Ok(item) => {
-                    input_pattern_impl!(@IMPL, rest, @($($consumed,)* item), $pattern $($rest_pattern)*)
+                    $crate::input_pattern_impl!(@IMPL, rest, @($($consumed,)* item), $pattern $($rest_pattern)*)
                 }
                 Err(_) => None,
             }
@@ -279,7 +279,7 @@ macro_rules! input_pattern_impl {
             use $crate::Consumable;
             match <$type>::consume($input) {
                 Ok((item, rest)) => {
-                    input_pattern_impl!(@IMPL, rest, @($($consumed,)* item), $($rest_pattern)*)
+                    $crate::input_pattern_impl!(@IMPL, rest, @($($consumed,)* item), $($rest_pattern)*)
                 }
                 Err(_) => None,
             }
@@ -291,9 +291,9 @@ macro_rules! input_pattern_impl {
         {
             let input = $input;
             if let Some(rest) = $crate::strip_prefix(input, $pattern) {
-                input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
+                $crate::input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
             } else {
-                input_pattern_impl!(@IMPL, input, @($($consumed),*), $($rest_pattern)*)
+                $crate::input_pattern_impl!(@IMPL, input, @($($consumed),*), $($rest_pattern)*)
             }
         }
     };
@@ -301,7 +301,7 @@ macro_rules! input_pattern_impl {
     // Pattern must be matched
     ( @IMPL, $input:expr, @($($consumed:expr),*), $pattern:literal, $($rest_pattern:tt)* ) => {
         if let Some(rest) = $crate::strip_prefix($input, $pattern) {
-            input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
+            $crate::input_pattern_impl!(@IMPL, rest, @($($consumed),*), $($rest_pattern)*)
         } else {
             None
         }
@@ -314,21 +314,21 @@ macro_rules! input_pattern_impl {
 
     // Output type inference
     ( @OUT, @($($types:ty),*), [$($inner:tt)+], $($rest:tt)* ) => {
-        input_pattern_impl!(@OUT, @($($types,)* Vec<
-            input_pattern_impl!(@OUT, @(), $($inner)+, )
+        $crate::input_pattern_impl!(@OUT, @($($types,)* Vec<
+            $crate::input_pattern_impl!(@OUT, @(), $($inner)+, )
         >), $($rest)*)
     };
 
     ( @OUT, @($($types:ty),*), $type:ty, $($rest:tt)* ) => {
-        input_pattern_impl!(@OUT, @($($types,)* $type), $($rest)*)
+        $crate::input_pattern_impl!(@OUT, @($($types,)* $type), $($rest)*)
     };
 
     ( @OUT, @($($types:ty),*), $pattern:literal?, $($rest:tt)* ) => {
-        input_pattern_impl!(@OUT, @($($types),*), $($rest)*)
+        $crate::input_pattern_impl!(@OUT, @($($types),*), $($rest)*)
     };
 
     ( @OUT, @($($types:ty),*), $pattern:literal, $($rest:tt)* ) => {
-        input_pattern_impl!(@OUT, @($($types),*), $($rest)*)
+        $crate::input_pattern_impl!(@OUT, @($($types),*), $($rest)*)
     };
 
     ( @OUT, @($type:ty), ) => {
