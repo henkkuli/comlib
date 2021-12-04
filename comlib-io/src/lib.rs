@@ -20,7 +20,9 @@
 
 #![warn(missing_docs)]
 
+use std::collections::VecDeque;
 use std::io::{BufRead, Error, ErrorKind, Stdin, StdinLock};
+use std::ops::Bound;
 use std::{ops::RangeBounds, str::FromStr};
 
 mod consumable;
@@ -30,14 +32,20 @@ mod writer;
 pub use writer::spaced;
 
 /// Helper for reading objects implementing [`InputPattern`] trait.
-pub struct Input<T>(T, Option<String>);
+pub struct Input<T> {
+    input: T,
+    cache: VecDeque<String>,
+}
 
 impl<'a> Input<StdinLock<'a>> {
     /// Construct [`Input`] from [`&Stdin`].
     ///
     /// [`&Stdin`]: std::io::Stdin
     pub fn from_stdin(stdin: &'a Stdin) -> Self {
-        Self(stdin.lock(), None)
+        Self {
+            input: stdin.lock(),
+            cache: VecDeque::new(),
+        }
     }
 }
 
@@ -45,34 +53,43 @@ impl<T> Input<T>
 where
     T: BufRead,
 {
-    /// Update cache containing next line.
-    fn update_cache(&mut self) -> Result<(), Error> {
-        if self.1.is_none() {
-            let mut line = String::new();
-            let read_len = self.0.read_line(&mut line)?;
-            if read_len == 0 {
-                // Nothing found, this has to be the end
-                return Err(ErrorKind::Other.into());
-            }
-            // Trim control characters from the end
-            while line.chars().last().map(|c| c.is_control()).unwrap_or(false) {
-                line.pop();
-            }
-            self.1 = Some(line);
+    // Tries to read a raw line from the input, skipping the cache.
+    fn try_read_raw_line(&mut self) -> Result<String, Error> {
+        let mut line = String::new();
+
+        let read_len = self.input.read_line(&mut line)?;
+        if read_len == 0 {
+            // Nothing found, this has to be the end
+            return Err(ErrorKind::Other.into());
+        }
+
+        // Trim control characters from the end
+        while line.chars().last().map(|c| c.is_control()).unwrap_or(false) {
+            line.pop();
+        }
+
+        Ok(line)
+    }
+
+    /// Ensure that cache contains at least one line.
+    fn ensure_cache_contains_line(&mut self) -> Result<(), Error> {
+        if self.cache.is_empty() {
+            let line = self.try_read_raw_line()?;
+            self.cache.push_back(line);
         }
         Ok(())
     }
 
     /// Peek next line of the input without consuming it.
     pub fn peek_line(&mut self) -> Result<&str, Error> {
-        self.update_cache()?;
-        Ok(self.1.as_ref().unwrap())
+        self.ensure_cache_contains_line()?;
+        Ok(self.cache.front().unwrap())
     }
 
     /// Read the next line of the input and consume it.
     pub fn read_line(&mut self) -> Result<String, Error> {
-        self.update_cache()?;
-        Ok(self.1.take().unwrap())
+        self.ensure_cache_contains_line()?;
+        Ok(self.cache.pop_front().unwrap())
     }
 
     /// Read line a with the given type.
@@ -125,25 +142,59 @@ where
         P: InputPattern,
         R: RangeBounds<usize> + std::fmt::Debug,
     {
-        let mut res = vec![];
-        let mut lower_bound_reached = range.contains(&0);
-        while !lower_bound_reached || range.contains(&(res.len() + 1)) {
-            if let Some(item) = self.match_line_opt(pattern.clone()) {
-                res.push(item);
-            } else {
-                break;
-            }
-            if range.contains(&res.len()) {
-                lower_bound_reached = true;
-            }
-        }
+        let res = self
+            .match_lines_opt(pattern, (Bound::Included(0), range.end_bound().cloned()))
+            .unwrap();
         assert!(
-            lower_bound_reached,
+            range.contains(&res.len()),
             "not enough lines matched the pattern. {} lines matched, but expected {:?} lines",
             res.len(),
             range
         );
         res
+    }
+
+    /// Read multiple lines matching given `pattern`.
+    ///
+    /// Returns None if not enough lines could be matched.
+    pub fn match_lines_opt<P, R>(&mut self, pattern: P, range: R) -> Option<Vec<P::Output>>
+    where
+        P: InputPattern,
+        R: RangeBounds<usize> + std::fmt::Debug,
+    {
+        let mut res = vec![];
+        let mut lower_bound_reached = range.contains(&0);
+        while !lower_bound_reached || range.contains(&(res.len() + 1)) {
+            // Get the next line if it exists, or read it and add to cache
+            let line = match self.cache.get(res.len()) {
+                Some(line) => line,
+                None => {
+                    match self.try_read_raw_line() {
+                        Ok(line) => {
+                            self.cache.push_back(line);
+                            self.cache.get(res.len()).unwrap()
+                        }
+                        Err(_) => break, // No more input
+                    }
+                }
+            };
+
+            if let Some(item) = pattern.parse_all(line) {
+                res.push(item);
+            } else {
+                break; // Failed to parse the line
+            }
+            if range.contains(&res.len()) {
+                lower_bound_reached = true;
+            }
+        }
+        if range.contains(&res.len()) {
+            // Result is correct. Consume it from the cache
+            self.cache = self.cache.split_off(res.len());
+            Some(res)
+        } else {
+            None
+        }
     }
 }
 
@@ -152,6 +203,9 @@ impl<T: BufRead> From<T> for Input<T> {
     ///
     /// [`BufRead`]: std::io::BufRead
     fn from(reader: T) -> Self {
-        Self(reader, None)
+        Self {
+            input: reader,
+            cache: VecDeque::new(),
+        }
     }
 }

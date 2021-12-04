@@ -52,6 +52,16 @@ fn test_match_lines() {
 }
 
 #[test]
+fn test_match_lines_opt() {
+    let input = "1 2 3\n4 5 6\nhello";
+    let mut reader = Input::from(Cursor::new(input));
+    assert!(reader
+        .match_lines_opt(input_pattern!([i32, " "?]), 1..)
+        .is_some());
+    assert_eq!(reader.read_line().unwrap(), "hello");
+}
+
+#[test]
 fn test_match_string_lines() {
     let input = "l1\nl2\n";
     assert_eq!(

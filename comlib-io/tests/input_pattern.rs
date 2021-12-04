@@ -154,3 +154,16 @@ fn test_non_greedy_array_matching() {
         ))
     );
 }
+
+#[test]
+fn test_repeated_pattern() {
+    assert!(input_pattern!("a"*, "b").parse_all("b").is_some());
+    assert!(input_pattern!("a"*, "b").parse_all("ab").is_some());
+    assert!(input_pattern!("a"*, "b").parse_all("aab").is_some());
+    assert!(input_pattern!("a"*, "b").parse_all("aaaab").is_some());
+
+    assert!(input_pattern!("a"+, "b").parse_all("b").is_none());
+    assert!(input_pattern!("a"+, "b").parse_all("ab").is_some());
+    assert!(input_pattern!("a"+, "b").parse_all("aab").is_some());
+    assert!(input_pattern!("a"+, "b").parse_all("aaaab").is_some());
+}
