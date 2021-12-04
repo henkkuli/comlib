@@ -464,11 +464,11 @@
                 <span class="ident">first</span> <span class="op">=</span> <span class="bool-val">false</span>;
                 <span class="ident">has_dot</span> <span class="op">=</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;.&#39;</span>;
                 <span class="macro">matches!</span>(<span class="ident">c</span>, <span class="string">&#39;+&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span> <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span>)
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">has_dot</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">has_dot</span> {
+                <span class="macro">matches!</span>(<span class="ident">c</span>, <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span>)
+            } <span class="kw">else</span> {
                 <span class="ident">has_dot</span> <span class="op">=</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;.&#39;</span>;
                 <span class="macro">matches!</span>(<span class="ident">c</span>, <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span>)
-            } <span class="kw">else</span> {
-                <span class="macro">matches!</span>(<span class="ident">c</span>, <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span>)
             }
         }
     }};

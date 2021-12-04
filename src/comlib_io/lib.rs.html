@@ -209,6 +209,7 @@
 <span id="209">209</span>
 <span id="210">210</span>
 <span id="211">211</span>
+<span id="212">212</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Comlib Input/Output Utilities</span>
 <span class="doccomment">//! This library contains commonly needed utilities for handling IO.</span>
 <span class="doccomment">//!</span>
@@ -252,6 +253,7 @@
     <span class="doccomment">/// Construct [`Input`] from [`&amp;Stdin`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`&amp;Stdin`]: std::io::Stdin</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_stdin</span>(<span class="ident">stdin</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Stdin</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">input</span>: <span class="ident">stdin</span>.<span class="ident">lock</span>(),
@@ -275,7 +277,7 @@
         }
 
         <span class="comment">// Trim control characters from the end</span>
-        <span class="kw">while</span> <span class="ident">line</span>.<span class="ident">chars</span>().<span class="ident">last</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">is_control</span>()).<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>) {
+        <span class="kw">while</span> <span class="ident">line</span>.<span class="ident">chars</span>().<span class="ident">last</span>().<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="ident">char::is_control</span>) {
             <span class="ident">line</span>.<span class="ident">pop</span>();
         }
 
