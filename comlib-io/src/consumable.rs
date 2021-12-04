@@ -78,11 +78,11 @@ macro_rules! float_pattern {
                 first = false;
                 has_dot = c == '.';
                 matches!(c, '+' | '-' | '.' | '0'..='9')
-            } else if !has_dot {
+            } else if has_dot {
+                matches!(c, '0'..='9')
+            } else {
                 has_dot = c == '.';
                 matches!(c, '.' | '0'..='9')
-            } else {
-                matches!(c, '0'..='9')
             }
         }
     }};

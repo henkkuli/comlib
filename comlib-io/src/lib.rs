@@ -41,6 +41,7 @@ impl<'a> Input<StdinLock<'a>> {
     /// Construct [`Input`] from [`&Stdin`].
     ///
     /// [`&Stdin`]: std::io::Stdin
+    #[must_use]
     pub fn from_stdin(stdin: &'a Stdin) -> Self {
         Self {
             input: stdin.lock(),
@@ -64,7 +65,7 @@ where
         }
 
         // Trim control characters from the end
-        while line.chars().last().map(|c| c.is_control()).unwrap_or(false) {
+        while line.chars().last().map_or(false, char::is_control) {
             line.pop();
         }
 
