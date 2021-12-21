@@ -144,7 +144,17 @@ where
         R: RangeBounds<usize> + std::fmt::Debug,
     {
         let res = self
-            .match_lines_opt(pattern, (Bound::Included(0), range.end_bound().cloned()))
+            .match_lines_opt(
+                pattern,
+                (
+                    Bound::Included(0),
+                    match range.end_bound() {
+                        Bound::Included(&v) => Bound::Included(v),
+                        Bound::Excluded(&v) => Bound::Excluded(v),
+                        Bound::Unbounded => Bound::Unbounded,
+                    },
+                ),
+            )
             .unwrap();
         assert!(
             range.contains(&res.len()),
