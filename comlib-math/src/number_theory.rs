@@ -1,7 +1,7 @@
 use std::iter::once;
 
 use crate::Integer;
-use comlib_common::MiniMap;
+use ::comlib_common::MiniMap;
 use rand::{thread_rng, Rng};
 
 /// Computes the greatest common divisor of the given numbers.
@@ -14,6 +14,13 @@ pub fn gcd<I: Integer>(a: I, b: I) -> I {
     } else {
         gcd(b, a % b)
     }
+}
+
+/// Computes the least common multiple of the given numbers.
+///
+/// The least common multiple of `a` and `b` is the smallest integer which is divisible by both `a` and `b`.
+pub fn lcm<I: Integer>(a: I, b: I) -> I {
+    a * b / gcd(a, b)
 }
 
 /// Raises base to given exponent in the given modulus.
@@ -114,8 +121,8 @@ pub fn factorize(n: u64) -> Vec<(u64, usize)> {
         } else {
             // Use the Pollard's rho algorithm with polynomial (x^2 + c) starting at a random x and using random c.
             loop {
-                let mut x = thread_rng().gen_range(1, n) as u128;
-                let c = thread_rng().gen_range(1, n) as u128;
+                let mut x = thread_rng().gen_range(1..n) as u128;
+                let c = thread_rng().gen_range(1..n) as u128;
                 let mut y = x;
                 let n = n as u128;
 

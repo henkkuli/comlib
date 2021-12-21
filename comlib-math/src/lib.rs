@@ -22,13 +22,16 @@ pub use modint::{
 };
 
 mod numtraits;
-pub use numtraits::Integer;
+pub use numtraits::{Float, Integer, NonZero, Numeric, Sign, Signed};
 
 mod number_theory;
-pub use number_theory::{factorize, gcd, is_prime, mod_pow, PrimeSieve};
+pub use number_theory::{factorize, gcd, is_prime, lcm, mod_pow, PrimeSieve};
 
 mod permutations;
 pub use permutations::next_permutation;
+
+mod quot;
+pub use quot::Quot;
 
 pub mod subsets;
 pub use subsets::subsets;
