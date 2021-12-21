@@ -3,7 +3,8 @@ name = "comlib-math"
 version = "0.1.0"
 authors = ["Henrik Lievonen <henrik.lievonen@hotmail.com>"]
 edition = "2018"
+license = "MIT"
 
 [dependencies]
-rand = "0.7"
+rand = "0.8"
 comlib-common = { path = "../comlib-common" }
