@@ -1,14 +1,15 @@
 var N = null;var sourcesIndex = {};
 sourcesIndex["cfg_if"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["comlib_common"] = {"name":"","files":["lib.rs","minimap.rs"]};
+sourcesIndex["comlib_geometry"] = {"name":"","files":["lib.rs","polygon.rs","primitive.rs","unit.rs"]};
 sourcesIndex["comlib_io"] = {"name":"","files":["consumable.rs","lib.rs","writer.rs"]};
-sourcesIndex["comlib_math"] = {"name":"","files":["lib.rs","modint.rs","number_theory.rs","numtraits.rs","permutations.rs","subsets.rs"]};
+sourcesIndex["comlib_math"] = {"name":"","files":["lib.rs","modint.rs","number_theory.rs","numtraits.rs","permutations.rs","quot.rs","subsets.rs"]};
 sourcesIndex["comlib_range"] = {"name":"","files":["bit.rs","lib.rs"]};
 sourcesIndex["comlib_string"] = {"name":"","files":["lib.rs","rolling_hash.rs"]};
 sourcesIndex["getrandom"] = {"name":"","files":["error.rs","error_impls.rs","lib.rs","linux_android.rs","use_file.rs","util.rs","util_libc.rs"]};
 sourcesIndex["libc"] = {"name":"","dirs":[{"name":"unix","dirs":[{"name":"linux_like","dirs":[{"name":"linux","dirs":[{"name":"gnu","dirs":[{"name":"b64","dirs":[{"name":"x86_64","files":["align.rs","mod.rs","not_x32.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["fixed_width_ints.rs","lib.rs","macros.rs"]};
 sourcesIndex["ppv_lite86"] = {"name":"","dirs":[{"name":"x86_64","files":["mod.rs","sse2.rs"]}],"files":["lib.rs","soft.rs","types.rs"]};
-sourcesIndex["rand"] = {"name":"","dirs":[{"name":"distributions","dirs":[{"name":"weighted","files":["alias_method.rs","mod.rs"]}],"files":["bernoulli.rs","binomial.rs","cauchy.rs","dirichlet.rs","exponential.rs","float.rs","gamma.rs","integer.rs","mod.rs","normal.rs","other.rs","pareto.rs","poisson.rs","triangular.rs","uniform.rs","unit_circle.rs","unit_sphere.rs","utils.rs","weibull.rs","ziggurat_tables.rs"]},{"name":"rngs","dirs":[{"name":"adapter","files":["mod.rs","read.rs","reseeding.rs"]}],"files":["entropy.rs","mock.rs","mod.rs","std.rs","thread.rs"]},{"name":"seq","files":["index.rs","mod.rs"]}],"files":["lib.rs","prelude.rs"]};
+sourcesIndex["rand"] = {"name":"","dirs":[{"name":"distributions","files":["bernoulli.rs","distribution.rs","float.rs","integer.rs","mod.rs","other.rs","slice.rs","uniform.rs","utils.rs","weighted.rs","weighted_index.rs"]},{"name":"rngs","dirs":[{"name":"adapter","files":["mod.rs","read.rs","reseeding.rs"]}],"files":["mock.rs","mod.rs","std.rs","thread.rs"]},{"name":"seq","files":["index.rs","mod.rs"]}],"files":["lib.rs","prelude.rs","rng.rs"]};
 sourcesIndex["rand_chacha"] = {"name":"","files":["chacha.rs","guts.rs","lib.rs"]};
 sourcesIndex["rand_core"] = {"name":"","files":["block.rs","error.rs","impls.rs","le.rs","lib.rs","os.rs"]};
 createSourceSidebar();

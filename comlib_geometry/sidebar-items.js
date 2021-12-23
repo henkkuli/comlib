@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["LineIntersection",""],["Ordering",""],["SegmentIntersection",""]],"fn":[["convex_hull","Computes the convex hull of the given set of points."]],"struct":[["Line","Represents the set of points (x, y) which satisfy ax + by + c = 0."],["Point",""],["Polygon",""],["PolygonSegmentIter",""],["Segment",""],["Unit",""]],"trait":[["ValidCoordinate",""]]});

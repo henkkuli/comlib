@@ -78,7 +78,7 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// # assert_eq!(permutation_count, 60);</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_permutation</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">T</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_permutation</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">T</span>]) -&gt; <span class="ident">bool</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Ord</span>,
 {
@@ -93,7 +93,7 @@
         <span class="ident">i</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
 
-    <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="comment">// All permutations done</span>
         <span class="ident">data</span>.<span class="ident">reverse</span>();
         <span class="kw">return</span> <span class="bool-val">false</span>;

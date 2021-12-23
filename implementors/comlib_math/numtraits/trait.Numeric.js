@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["comlib_geometry"] = [{"text":"impl <a class=\"trait\" href=\"comlib_math/numtraits/trait.Numeric.html\" title=\"trait comlib_math::numtraits::Numeric\">Numeric</a> for <a class=\"struct\" href=\"comlib_geometry/struct.Unit.html\" title=\"struct comlib_geometry::Unit\">Unit</a>","synthetic":false,"types":["comlib_geometry::unit::Unit"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -142,7 +142,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Bit</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Computes the sum of values up to and including the given index.</span>
-    <span class="kw">fn</span> <span class="ident">sum_until</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>
+    <span class="kw">fn</span> <span class="ident">sum_until</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) -&gt; <span class="ident">T</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
     {
@@ -157,23 +157,23 @@
     }
 
     <span class="doccomment">/// Computes the sum of values on the given range.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RangeBounds</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RangeBounds</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) -&gt; <span class="ident">T</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Default</span>,
     {
         <span class="comment">// Find the sum until the non-inclusive lower bound.</span>
         <span class="kw">let</span> <span class="ident">lower</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">range</span>.<span class="ident">start_bound</span>() {
-            <span class="ident">Bound::Excluded</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="kw-2">*</span><span class="ident">i</span>),
-            <span class="ident">Bound::Included</span>(<span class="number">0</span>) <span class="op">|</span> <span class="ident">Bound::Unbounded</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Default::default</span>(),
-            <span class="ident">Bound::Included</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>),
+            <span class="ident">Bound::Excluded</span>(<span class="ident">i</span>) =&gt; <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="kw-2">*</span><span class="ident">i</span>),
+            <span class="ident">Bound::Included</span>(<span class="number">0</span>) <span class="op">|</span> <span class="ident">Bound::Unbounded</span> =&gt; <span class="ident">Default::default</span>(),
+            <span class="ident">Bound::Included</span>(<span class="ident">i</span>) =&gt; <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>),
         };
 
         <span class="comment">// Find the sum until the inclusive upper bound.</span>
         <span class="kw">let</span> <span class="ident">upper</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">range</span>.<span class="ident">end_bound</span>() {
-            <span class="ident">Bound::Excluded</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Default::default</span>(),
-            <span class="ident">Bound::Excluded</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>),
-            <span class="ident">Bound::Included</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="kw-2">*</span><span class="ident">i</span>),
-            <span class="ident">Bound::Unbounded</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>),
+            <span class="ident">Bound::Excluded</span>(<span class="number">0</span>) =&gt; <span class="ident">Default::default</span>(),
+            <span class="ident">Bound::Excluded</span>(<span class="ident">i</span>) =&gt; <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>),
+            <span class="ident">Bound::Included</span>(<span class="ident">i</span>) =&gt; <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="kw-2">*</span><span class="ident">i</span>),
+            <span class="ident">Bound::Unbounded</span> =&gt; <span class="self">self</span>.<span class="ident">sum_until</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>),
         };
 
         <span class="ident">upper</span> <span class="op">-</span> <span class="ident">lower</span>
@@ -212,7 +212,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Time complexity</span>
     <span class="doccomment">/// Construction takes `O(n log n)` time.</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>;
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">len</span>();
         <span class="kw">for</span> <span class="ident">index</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="ident">n</span>).<span class="ident">rev</span>() {
@@ -241,7 +241,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Default</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
 {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>();
         <span class="ident">f</span>.<span class="ident">debug_list</span>()
             .<span class="ident">entries</span>((<span class="number">0</span>..<span class="ident">n</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">sum</span>(<span class="ident">i</span>..<span class="op">=</span><span class="ident">i</span>)))
